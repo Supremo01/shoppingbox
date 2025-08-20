@@ -33,13 +33,25 @@ const handleParticipar = async () => {
     const data = await res.json();
 
     if (res.ok) {
-      setMensaje(data.mensaje || "¡Participación registrada!");
+      if (data.error) {
+        setMensaje(data.error);
+      } else if (data.nombre?.trim().toUpperCase() !== nombre.trim().toUpperCase()) {
+        setMensaje("El nombre no coincide con la membresía.");
+      } else {
+        const fechaFormateada = new Date(data.fecha).toLocaleDateString("es-MX", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        setMensaje(`¡Gracias ${nombre.trim().toUpperCase()}! Última compra el ${fechaFormateada}`);
+      }
     } else {
-      setMensaje(data.error || "Error al validar la membresía.");
+      setMensaje(data.error || "Error en la validación.");
     }
   } catch (err) {
     console.error(err);
-    setMensaje("Ocurrió un error al conectar con el servidor.");
+    setMensaje("Error al conectar con el servidor.");
   }
 };
 
