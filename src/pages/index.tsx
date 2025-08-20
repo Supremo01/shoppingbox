@@ -33,18 +33,10 @@ const handleParticipar = async () => {
     const data = await res.json();
 
     if (res.ok) {
-      if (data.error) {
-        setMensaje(data.error);
-      } else if (data.nombre?.trim().toUpperCase() !== nombre.trim().toUpperCase()) {
-        setMensaje("El nombre no coincide con la membresía.");
+      if (data.mensaje) {
+        setMensaje(data.mensaje);
       } else {
-        const fechaFormateada = new Date(data.fecha).toLocaleDateString("es-MX", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
-
-        setMensaje(`¡Gracias ${nombre.trim().toUpperCase()}! Última compra el ${fechaFormateada}`);
+        setMensaje("Participación procesada.");
       }
     } else {
       setMensaje(data.error || "Error en la validación.");
@@ -70,9 +62,10 @@ const handleParticipar = async () => {
           <Image
             src="/img/logo.png"
             alt="ShoppingBox Logo"
-            width={900}
+            width={600}
             height={80}
             className="mx-auto"
+            
           />
         </motion.div>
 
@@ -81,7 +74,7 @@ const handleParticipar = async () => {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white text-4xl md:text-6xl font-bold text-center leading-tight drop-shadow-md"
+          className="text-white text-4xl md:text-6xl font-bold text-center leading-tight drop-shadow-md mt-20"
         >
           ¡Gracias por ser parte de Shopping Box!
         </motion.h1>
@@ -213,7 +206,7 @@ const handleParticipar = async () => {
 
 
         <p className="text-center text-blue-600 mt-20 font-medium text-2xl">
-          ¡Entre más uses Shopping Box, más oportunidades tienes de ganar!
+          ¡Entre más uses Shopping Box, más oportunidades tienes de ganar, Recuerda que para poder participar debes tener minimo una compra dentro de estos seis meses!
         </p>
 
         {/* FORMULARIO */}
